@@ -1,7 +1,0 @@
-#Thu Jan 26 17:32:37 CET 2017
-base.0=C\:\\Users\\joel\\StudioProjects\\GameClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_ca67f978991e41e5e1ce3e5e39ff5fabacf37743
-renamed.1=classes2.dex
-renamed.0=classes.dex
-file.1=C\:\\Users\\joel\\StudioProjects\\GameClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_cba0e61cf57fec429619c1eec6dd5bd3a6a53ed2\\classes.dex
-base.1=C\:\\Users\\joel\\StudioProjects\\GameClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_cba0e61cf57fec429619c1eec6dd5bd3a6a53ed2
-file.0=C\:\\Users\\joel\\StudioProjects\\GameClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_ca67f978991e41e5e1ce3e5e39ff5fabacf37743\\classes.dex
