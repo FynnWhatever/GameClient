@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\joel\StudioProjects\GameClient\app\libs\mysql-connector-java-5.1.18-bin.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="85dfedad243dc0303ad7ae3a323c39421d220690">
+        <dex dex="C:\Users\joel\StudioProjects\GameClient\app\build\intermediates\pre-dexed\debug\mysql-connector-java-5.1.18-bin_5d9695a0e727276e4c5e6c463373b18338e9a35c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\joel\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="C:\Users\joel\StudioProjects\GameClient\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0_f4f9255054438317b9c906daa62a6be4c38a6cf9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\joel\StudioProjects\GameClient\app\libs\jxl.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="393646b600ad1cd89a6e3c61f0b51640ac977f75">
+        <dex dex="C:\Users\joel\StudioProjects\GameClient\app\build\intermediates\pre-dexed\debug\jxl_4febadd2aae71154f973c1a487ed040f488b93ea.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\joel\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.6.2\f1bc476cc167b18e66c297df599b2377131a8947\gson-2.6.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f1bc476cc167b18e66c297df599b2377131a8947">
+        <dex dex="C:\Users\joel\StudioProjects\GameClient\app\build\intermediates\pre-dexed\debug\gson-2.6.2_e7e4291a55d0c1a133d4006a23f4594afdc8ea5d.jar" />
+    </item>
+
+</items>
