@@ -5,9 +5,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -17,10 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.view.View.OnTouchListener;
 
 import com.google.gson.Gson;
 
@@ -38,7 +34,6 @@ import java.nio.ByteBuffer;
 
 public class MainActivity1 extends Activity {
 
-	//https://www.myandroidsolutions.com/2012/07/20/android-tcp-connection-tutorial/#.WId7XlPhCiM
 	String address = "192.168.178.92";
 	int port = 1234;
 	private Socket socketTCP;
@@ -47,100 +42,85 @@ public class MainActivity1 extends Activity {
 	float hold_x = -100;
 	float hold_y = -100;
 	String myID;
-	
-	
+	Gson gson = new Gson();
+	boolean hold = false;
 	View mView;   
 	TextView tv;
 	final Context context = this;
-
 	boolean connected = false;
-	
-	Paint thumbCircle;
-	Gson gson = new Gson();
-	boolean hold = false;
-	
+
+	public enum PlayerAction{
+		move,pressA,pressB
+	}
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		myID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-		
-		reconnect();
-		
-		LinearLayout layout = (LinearLayout) findViewById(R.id.myDrawing); 
-		
-		tv = (TextView) getLayoutInflater().inflate(R.layout.text_view, null);
-		  layout.addView(tv);
-		  
-		  mView = new DrawingView(this);  
-		  layout.addView(mView, new LayoutParams(  
-		    LinearLayout.LayoutParams.MATCH_PARENT,  
-		    LinearLayout.LayoutParams.MATCH_PARENT)); 
-		  tv.setText(myID);
-		//setWillNotDraw(false);
 
+		mView = (GamePadView)findViewById(R.id.gamepadview_id);
+		mView.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if(!connected){
+					if (event.getAction() == MotionEvent.ACTION_DOWN)
+						notConnectedAlert();
+					return true;
+				}
+				GamePadView view = (GamePadView)v;
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					hold=true;
+					hold_x = event.getX();
+					hold_y = event.getY();
+					view.setHoldCoordinates(hold_x,hold_y);
+					view.invalidate(); //redraw dot
+
+					return true;
+				}else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+					float cur_x=event.getX();
+					float cur_y=event.getY();
+					int vec_y = (int)(cur_y-hold_y);
+					int vec_x = (int)(cur_x-hold_x);
+					PlayerAction ac = PlayerAction.move;
+					UserInput ui = new UserInput(myID,ac,vec_x,vec_y);
+					String message = gson.toJson(ui);
+					if(tv != null)
+						tv.setText(message);
+					sendDataUDP(message);
+				} else if (event.getAction() == MotionEvent.ACTION_UP) {
+					hold=false;
+					hold_x = -100;
+					hold_y = -100;
+					view.setHoldCoordinates(hold_x,hold_y);
+					v.invalidate(); //redraw dot
+				}
+				return true;
+			}
+		});
+
+		myID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID); // muss vor reconnect aufgerufen werden
+		reconnect();
 	}
 		
 
 	
-	 class DrawingView extends View {  
- 
-		  
-		  public DrawingView(Context context) {  
-		   super(context);  
-		    
-		   this.setBackgroundColor(Color.BLACK);  
-		   thumbCircle = new Paint();
-		   thumbCircle.setStyle(Paint.Style.FILL);
-           thumbCircle.setColor(Color.WHITE);
-		  }  
-		  
 
 
-		 @Override
-		 protected void dispatchDraw (Canvas canvas){	//anstatt onDraw() welches nicht updated
-			 if(android.os.Debug.isDebuggerConnected())
-				 android.os.Debug.waitForDebugger();
-			 super.dispatchDraw(canvas);
-			 canvas.drawCircle(hold_x, hold_y, 50, thumbCircle);
-		 }
+	public void onActionButtonAClick(View view) {
+		PlayerAction ac = PlayerAction.pressA;
+		UserInput ui = new UserInput(myID,ac,0,0);
+		String message = gson.toJson(ui);
+		sendDataUDP(message);
+	}
 
+	public void onActionButtonBClick(View view) {
+		PlayerAction ac = PlayerAction.pressB;
+		UserInput ui = new UserInput(myID,ac,0,0);
+		String message = gson.toJson(ui);
+		sendDataUDP(message);
+	}
 
-		  @Override  
-		  public boolean onTouchEvent(MotionEvent event) {
-
-			  if(!connected){
-				  if (event.getAction() == MotionEvent.ACTION_DOWN)
-					  notConnectedAlert();
-				  return true;
-			  }
-
-			  if (event.getAction() == MotionEvent.ACTION_DOWN) {
-				  hold=true;
-				  hold_x = event.getX();
-				  hold_y = event.getY();
-				  invalidate(); //redraw dot
-				  return true;
-			  }else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-				  float cur_x=event.getX();
-				  float cur_y=event.getY();
-				  int vec_y = (int)(cur_y-hold_y);
-				  int vec_x = (int)(cur_x-hold_x);
-				  UserInput ui = new UserInput(myID,vec_x,vec_y);
-				  String message = gson.toJson(ui);
-				  tv.setText(message);
-				  sendDataUDP(message);
-			  } else if (event.getAction() == MotionEvent.ACTION_UP) {
-				  hold=false;
-				  hold_x = -100;
-				  hold_y = -100;
-				  invalidate(); //redraw dot
-			  }
-			  return true;  
-		  }  
-	 }
-	 
 	 public void  notConnectedAlert(){
 		 new AlertDialog.Builder(context)
 		    .setTitle("Keine Verbindung")
@@ -241,73 +221,13 @@ public class MainActivity1 extends Activity {
 
             alertD.show();
 	}
-	
-	/*
-	
-	public void send_down_command(View view) {
-		try {
-			streamOutTCP.writeUTF("s");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 	    
-	}
 
-	class ClientThread implements Runnable{
-		public boolean doTerminate = false;
-		@Override
-		public void run(){
-			
-			try {
-				 if(socketTCP!=null)
-					 socketTCP.close();
-				socketTCP = new Socket();
-				socketTCP.connect(new InetSocketAddress(address, port), 3000);
-				streamOutTCP = new DataOutputStream(socketTCP.getOutputStream());
-				connected = true;
-				connectedAlert();
-				sendDataTCP(myID);
-			} catch (UnknownHostException e) {
-				doTerminate = true;
-				e.printStackTrace();
-			} catch (SocketTimeoutException e){
-				doTerminate = true;
-				e.printStackTrace();
-			} catch (IOException e) {
-				doTerminate = true;
-				e.printStackTrace();
-			}finally {
-				notConnectedAlert();
-			}
-			
-			while(!doTerminate){
-				
-			}	
-		}
-	}
-	*/
 
 	void reconnect(){
-
-		/*
-		killConnection();
-		Thread.UncaughtExceptionHandler exceptionHandler = new Thread.UncaughtExceptionHandler() {
-		    public void uncaughtException(Thread th, Throwable ex) {
-				killConnection();
-				notConnectedAlert();
-		    }
-		};
-
-		connection = new Thread(new ClientThread());
-		connection.setUncaughtExceptionHandler(exceptionHandler);
-		connection.start();
-		*/
 		killConnection();
 		ProgressDialog progress = new ProgressDialog(this);
 		progress.setMessage("Connecting...");
 		new ConnectionTask(progress).execute();
-
-
-
 	}
 
 	void killConnection(){
