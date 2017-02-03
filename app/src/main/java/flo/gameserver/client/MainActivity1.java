@@ -14,9 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.view.View.OnTouchListener;
 
 import com.google.gson.Gson;
 
@@ -31,6 +31,8 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity1 extends Activity {
 
@@ -48,6 +50,10 @@ public class MainActivity1 extends Activity {
 	TextView tv;
 	final Context context = this;
 	boolean connected = false;
+	private Timer timer;
+	long milisec = 33;
+	int vec_y = 0;
+	int vec_x = 0;
 
 	public enum PlayerAction{
 		move,pressA,pressB
@@ -73,6 +79,8 @@ public class MainActivity1 extends Activity {
 					hold=true;
 					hold_x = event.getX();
 					hold_y = event.getY();
+					vec_x = 0;
+					vec_y = 0;
 					view.setHoldCoordinates(hold_x,hold_y);
 					view.invalidate(); //redraw dot
 
@@ -80,18 +88,22 @@ public class MainActivity1 extends Activity {
 				}else if (event.getAction() == MotionEvent.ACTION_MOVE) {
 					float cur_x=event.getX();
 					float cur_y=event.getY();
-					int vec_y = (int)(cur_y-hold_y);
-					int vec_x = (int)(cur_x-hold_x);
+					vec_y = (int)(cur_y-hold_y);
+					vec_x = (int)(cur_x-hold_x);
+					/*
 					PlayerAction ac = PlayerAction.move;
 					UserInput ui = new UserInput(myID,ac,vec_x,vec_y);
 					String message = gson.toJson(ui);
 					if(tv != null)
 						tv.setText(message);
 					sendDataUDP(message);
+					*/
 				} else if (event.getAction() == MotionEvent.ACTION_UP) {
 					hold=false;
 					hold_x = -100;
 					hold_y = -100;
+					vec_x = 0;
+					vec_y = 0;
 					view.setHoldCoordinates(hold_x,hold_y);
 					v.invalidate(); //redraw dot
 				}
@@ -102,9 +114,34 @@ public class MainActivity1 extends Activity {
 		myID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID); // muss vor reconnect aufgerufen werden
 		reconnect();
 	}
-		
 
-	
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				PlayerAction ac = PlayerAction.move;
+				UserInput ui = new UserInput(myID,ac,vec_x,vec_y);
+				String message = gson.toJson(ui);
+				if(tv != null)
+					tv.setText(message);
+				sendDataUDP(message);
+			}
+		}, 0, milisec);
+
+	}
+
+
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		timer.cancel();
+	}
 
 
 	public void onActionButtonAClick(View view) {
@@ -259,13 +296,14 @@ public class MainActivity1 extends Activity {
 	}
 
 	private void sendDataUDP(String data){
-		new UDPTask(socketUDP).execute(data);
+		if(connected)
+			new UDPTask(socketUDP).execute(data);
 	}
 
 
 
 	@Override
-	public void onDetachedFromWindow() {
+	public void onDetachedFromWindow() { //macht das Sinn?
 	    super.onDetachedFromWindow();
 	    killConnection();
 	}

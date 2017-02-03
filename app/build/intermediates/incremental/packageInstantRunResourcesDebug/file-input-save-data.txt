@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Wed Feb 01 16:44:13 CET 2017
+#Fri Feb 03 15:52:43 CET 2017
 8.set=ANDROID_RESOURCE
 1.base=C\:\\Users\\joel\\StudioProjects\\GameClient\\app\\build\\intermediates\\res\\resources-debug.ap_
 1.file=C\:\\Users\\joel\\StudioProjects\\GameClient\\app\\build\\intermediates\\res\\resources-debug.ap_\\res\\drawable-xhdpi-v4\\ic_launcher.png

@@ -34,7 +34,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="e0a4a7f91bb10815aa1d59bdf130c0498c6bab84">
+        sha1="3fcf4082ef22466fe0dd272dc33f5318bb90e141">
         <dex dex="C:\Users\joel\StudioProjects\GameClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_ca67f978991e41e5e1ce3e5e39ff5fabacf37743\classes.dex" />
     </item>
     <item
@@ -52,7 +52,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="b267e38fb3f5c0d6dc6404c74a1ece56cde528f8">
+        sha1="fcf663c6a84f09c1db690ee7a5fdad44572db611">
         <dex dex="C:\Users\joel\StudioProjects\GameClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_cba0e61cf57fec429619c1eec6dd5bd3a6a53ed2\classes.dex" />
     </item>
 
