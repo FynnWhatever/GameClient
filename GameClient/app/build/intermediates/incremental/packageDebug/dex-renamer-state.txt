@@ -1,4 +1,0 @@
-#Fri Feb 03 19:41:38 CET 2017
-base.0=C\:\\Users\\joel\\StudioProjects\\GameClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
-renamed.0=classes.dex
-file.0=C\:\\Users\\joel\\StudioProjects\\GameClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex

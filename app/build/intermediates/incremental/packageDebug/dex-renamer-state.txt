@@ -1,0 +1,10 @@
+<<<<<<< HEAD:GameClient/app/build/intermediates/incremental/packageDebug/dex-renamer-state.txt
+#Fri Feb 03 19:41:38 CET 2017
+base.0=C\:\\Users\\joel\\StudioProjects\\GameClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
+=======
+#Fri Feb 03 15:52:56 CET 2017
+base.0=C\:\\Users\\joel\\StudioProjects\\GameClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_ca67f978991e41e5e1ce3e5e39ff5fabacf37743
+renamed.1=classes2.dex
+>>>>>>> 2e8c48a1aaedca99e6593c2f5a1dd93ab61861d0:app/build/intermediates/incremental/packageDebug/dex-renamer-state.txt
+renamed.0=classes.dex
+file.0=C\:\\Users\\joel\\StudioProjects\\GameClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex
