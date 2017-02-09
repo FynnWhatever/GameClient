@@ -5,36 +5,36 @@
     density="xhdpi"
     format="8"
     plugin-version="2.2.3"
-    timestamp="23413848143667"
+    timestamp="10823506688066"
     token="-5751543738095710677"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="79" />
+        duration="110" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="31" />
+        duration="12" />
     <task
         name="verifier"
-        duration="0" />
+        duration="1" />
 
     <artifact
         location="C:\Users\joel\StudioProjects\GameClient\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_1\classes.dex"
         type="DEX" />
 
     <build
-        timestamp="20036189580967"
+        timestamp="10093135555856"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="C:\Users\joel\StudioProjects\GameClient\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
     </build>
     <build
-        timestamp="23413848143667"
+        timestamp="10823506688066"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="C:\Users\joel\StudioProjects\GameClient\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_1\classes.dex"
